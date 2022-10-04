@@ -8,7 +8,6 @@ import { useFetchContactsQuery } from 'redux/contactsSlice';
 import { Spinner } from './Spinner/Spinner';
 
 export const App = () => {
-  // const contacts = useSelector(getContacts);
   const { data: contacts, isFetching } = useFetchContactsQuery();
 
   return (

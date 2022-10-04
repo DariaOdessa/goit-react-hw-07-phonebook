@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   Button,
   ContactName,
@@ -35,4 +36,12 @@ export const ContactItem = ({ contact: { name, number, id } }) => {
       </TableCell>
     </>
   );
+};
+
+ContactItem.propTypes = {
+  contact: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+  }).isRequired,
 };
