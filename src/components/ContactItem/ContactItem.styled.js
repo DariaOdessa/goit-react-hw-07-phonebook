@@ -28,3 +28,8 @@ font-size: ${p => p.theme.fontSizes.l};
 font-weight: ${p => p.theme.fontWeights.bold};
 margin-right: ${p => p.theme.space[3]}px;
 `
+export const TableCell = styled.td`
+padding: ${p => p.theme.space[4]}px;
+border-top: ${p => p.theme.borders.normal};
+/* text-align: center; */
+`

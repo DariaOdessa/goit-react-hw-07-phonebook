@@ -1,16 +1,18 @@
-import { nanoid } from '@reduxjs/toolkit';
 import { useState } from 'react';
 import { FormWrapper, InputName, Input, Button } from './ContactForm.styled';
-import { addContact } from 'redux/contactsSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { Spinner } from 'components/Spinner/Spinner';
+import {
+  useFetchContactsQuery,
+  useCreateContactMutation,
+} from 'redux/contactsSlice';
 
 export const ContactForm = () => {
   const [formInput, setFormInput] = useState({
     name: '',
     number: '',
   });
-
+  const { data: contacts } = useFetchContactsQuery();
+  const [createContact, { isLoading }] = useCreateContactMutation();
   const { name, number } = formInput;
 
   const onFormChange = e => {
@@ -18,24 +20,19 @@ export const ContactForm = () => {
     setFormInput(state => ({ ...state, [name]: value }));
   };
 
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-
-  const handleAddContact = e => {
+  const handleAddContact = async e => {
     e.preventDefault();
     setFormInput({ name: '', number: '' });
-
     const newContact = {
       name,
       number,
-      id: nanoid(),
     };
 
     contacts.find(
       contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
     )
       ? alert(`${newContact.name} is already exist in your contacts!`)
-      : dispatch(addContact(newContact));
+      : await createContact(newContact);
   };
 
   return (
@@ -62,7 +59,10 @@ export const ContactForm = () => {
           onChange={onFormChange}
         />
 
-        <Button type="submit">Add contact</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading && <Spinner size={14} />}
+          Add contact
+        </Button>
       </form>
     </FormWrapper>
   );

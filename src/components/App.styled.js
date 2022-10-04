@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Phonebook = styled.div`
-width: 600px;
+width: 800px;
 padding: ${p => p.theme.space[5]}px;
 background-color: ${p => p.theme.colors.backgroundGray};
 margin-top: ${p => p.theme.space[6]}px;
